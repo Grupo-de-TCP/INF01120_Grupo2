@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": ["Splitwise/src"],
+    "java.project.outputPath": "Splitwise/bin",
+    "java.project.referencedLibraries": [
+        "Splitwise/lib/**/*.jar"
+    ]
+}
