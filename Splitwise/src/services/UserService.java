@@ -4,6 +4,7 @@ import models.User;
 import java.util.HashMap;
 import java.util.Map;
 
+//  Serviço para gerenciar usuários
 public class UserService {
     private Map<String, User> users = new HashMap<>();
 

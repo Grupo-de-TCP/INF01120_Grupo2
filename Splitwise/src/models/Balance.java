@@ -1,5 +1,6 @@
 package models;
 
+// Representa o saldo entre os membros
 public class Balance {
     private User fromUser;
     private User toUser;
