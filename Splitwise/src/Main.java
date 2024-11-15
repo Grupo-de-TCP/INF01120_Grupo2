@@ -16,7 +16,7 @@ public class Main {
         UserService userService = new UserService();
         GroupService groupService = new GroupService();
         ExpenseService expenseService = new ExpenseService();
-        BalanceService balanceService = new BalanceService();
+        BalanceService balanceService = new BalanceService(userService); // Passa o UserService
 
         // Criação de usuários
         User user1 = new User("1", "Alice");
@@ -40,13 +40,13 @@ public class Main {
         expenseService.addExpense(expense2);
         expenseService.addExpense(expense3);
 
-        // Calcula os saldos para o grupo
+        // Calcula os saldos consolidados para o grupo
         List<Expense> groupExpenses = expenseService.getExpensesByGroup(group);
         balanceService.calculateBalances(groupExpenses);
 
-        // Exibe o balanço entre os membros
-        System.out.println("Balanço entre os membros do grupo '" + group.getName() + "':");
-        for (Balance balance : balanceService.getBalances()) {
+        // Exibe o balanço consolidado entre os membros
+        System.out.println("Balanço consolidado entre os membros do grupo '" + group.getName() + "':");
+        for (Balance balance : balanceService.getConsolidatedBalances()) {
             System.out.println(balance.getFromUser().getName() + " deve " + balance.getToUser().getName() + ": " + balance.getAmount());
         }
     }
