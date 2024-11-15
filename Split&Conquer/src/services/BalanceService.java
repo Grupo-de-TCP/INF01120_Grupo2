@@ -1,35 +1,3 @@
-/* 
-package services;
-
-import models.Balance;
-import models.Expense;
-import models.User;
-import java.util.ArrayList;
-import java.util.List;
-
-//  Serviço para calcular e gerenciar saldos entre membros
-public class BalanceService {
-    private List<Balance> balances = new ArrayList<>();
-
-    public void calculateBalances(List<Expense> expenses) {
-        // Limpa o saldo existente antes de recalcular
-        balances.clear();
-        for (Expense expense : expenses) {
-            double amountPerUser = expense.getAmount() / expense.getSplitAmong().size();
-            for (User user : expense.getSplitAmong()) {
-                if (!user.equals(expense.getPaidBy())) {
-                    balances.add(new Balance(user, expense.getPaidBy(), amountPerUser));
-                }
-            }
-        }
-    }
-
-    public List<Balance> getBalances() {
-        return balances;
-    }
-}
-*/
-
 package services;
 
 import models.Balance;
@@ -41,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Serviço para gerenciar os saldos entre os usuários, calculando quem deve quanto a quem
 public class BalanceService {
     private Map<String, Map<String, Double>> balanceSheet = new HashMap<>();
     private UserService userService;
@@ -65,7 +34,7 @@ public class BalanceService {
                     balanceSheet.putIfAbsent(debtorId, new HashMap<>());
                     balanceSheet.putIfAbsent(payerId, new HashMap<>());
     
-                    // Adiciona a dívida de debtorId para payerId com arredondamento
+                    // Adiciona a dívida de debtorId para payerId 
                     double currentDebt = balanceSheet.get(debtorId).getOrDefault(payerId, 0.0);
                     balanceSheet.get(debtorId).put(payerId, Math.round((currentDebt + amountPerUser) * 100.0) / 100.0);
                 }
@@ -95,7 +64,6 @@ public class BalanceService {
             }
         }
     }
-    
 
     public List<Balance> getConsolidatedBalances() {
         List<Balance> balances = new ArrayList<>();

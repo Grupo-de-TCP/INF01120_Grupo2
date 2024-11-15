@@ -6,12 +6,14 @@ public class Balance {
     private User toUser;
     private double amount;
 
+    // Construtor
     public Balance(User fromUser, User toUser, double amount) {
-        this.fromUser = fromUser;
-        this.toUser = toUser;
-        this.amount = amount;
+        this.setFromUser(fromUser);
+        this.setToUser(toUser);
+        this.setAmount(amount);
     }
 
+    // Getters
     public User getFromUser() {
         return fromUser;
     }
@@ -22,5 +24,18 @@ public class Balance {
 
     public double getAmount() {
         return amount;
+    }
+
+    // Setters
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public void setToUser(User toUser) {
+        this.toUser = toUser;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }

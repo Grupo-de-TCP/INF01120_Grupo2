@@ -36,8 +36,8 @@ public class Main {
         // Registro de despesas no grupo
         Expense expense1 = new Expense("e1", 400, user1, Arrays.asList(user1, user2, user3, user4)); // gasolina
         Expense expense2 = new Expense("e2", 100, user2, Arrays.asList(user1, user2, user3, user4)); // almoço
-        Expense expense3 = new Expense("e3", 50, user3, Arrays.asList(user2, user3, user4)); // compras
-        Expense expense4 = new Expense("e4", 25, user2, Arrays.asList(user4)); // Aposta
+        Expense expense3 = new Expense("e3", 150, user3, Arrays.asList(user2, user3, user4)); // compras
+        Expense expense4 = new Expense("e4", 100, user2, Arrays.asList(user4)); // Aposta
 
         expenseService.addExpense(expense1);
         expenseService.addExpense(expense2);
@@ -55,3 +55,9 @@ public class Main {
         }
     }
 }
+/* 
+acessar \INF01120_Grupo2\Split&Conquer> :
+executar os comandos: 
+javac src/Main.java src/models/*.java src/services/*.java (para compilar)
+java -cp src Main (para rodar)
+*/
