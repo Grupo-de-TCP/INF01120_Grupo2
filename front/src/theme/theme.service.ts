@@ -25,7 +25,7 @@ export type ThemeStoreActions = {
 const defaultValues: ThemeStoreValue & { open: boolean; canReset: boolean } = {
   themeStretch: false,
   themeMode: "light",
-  themeContrast: "default",
+  themeContrast: "bold",
   themeLayout: window.innerWidth < 1536 ? "mini" : "vertical",
   primaryColor: "default",
   navColor: "integrate",

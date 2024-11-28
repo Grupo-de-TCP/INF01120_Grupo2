@@ -26,7 +26,7 @@ const MuiCssBaseline: Components<Theme>["MuiCssBaseline"] = {
     "#root, #__next": {
       width: "100%",
       minHeight: "100%",
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: theme.vars.palette.background.default,
     },
     input: {
       "&[type=number]": {

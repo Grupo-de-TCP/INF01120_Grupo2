@@ -27,12 +27,6 @@ export function updateCoreWithSettings(theme: ThemeUpdateOptions, settings: Them
           ...(colorSchemes?.light as ColorSystemOptions)?.palette,
           /** [1] */
           primary: getPalettePrimary(settings.primaryColor),
-          /** [2] */
-          background: {
-            ...(colorSchemes?.light as ColorSystemOptions)?.palette?.background,
-            default: getBackgroundDefault(settings.themeContrast),
-            defaultChannel: hexToRgbChannel(getBackgroundDefault(settings.themeContrast)),
-          },
         },
       },
       dark: {
@@ -101,9 +95,4 @@ function getPalettePrimary(primaryColorName: ThemeStoreValue["primaryColor"]) {
   const updatedPrimaryPalette = createPaletteChannel(selectedPrimaryColor);
 
   return primaryColorName === "default" ? corePrimaryPalette : updatedPrimaryPalette;
-}
-
-function getBackgroundDefault(contrast: ThemeStoreValue["themeContrast"]) {
-  /** [2] */
-  return contrast === "default" ? "#FFFFFF" : coreGreyPalette[200];
 }
