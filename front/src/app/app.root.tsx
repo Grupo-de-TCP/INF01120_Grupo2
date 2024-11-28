@@ -1,10 +1,10 @@
 import { AppProvider } from "./app.provider"
-import { Layout } from "interface/core"
+import { AppRoutes } from "./app.routes"
 
 export const AppRoot = () => {
   return (
     <AppProvider>
-      <Layout/>
+      <AppRoutes/>
     </AppProvider>
   )
 }
