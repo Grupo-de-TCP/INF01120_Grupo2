@@ -1,6 +1,6 @@
 import { radioClasses } from "@mui/material/Radio";
 import type { Components, Theme } from "@mui/material/styles";
-import { FAIcon } from "components/fa-icon";
+import { FAIcon } from "interface/components/fa-icon";
 
 // ----------------------------------------------------------------------
 

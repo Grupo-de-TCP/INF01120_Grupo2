@@ -4,7 +4,7 @@ import { buttonClasses } from "@mui/material/Button";
 import type { ButtonProps } from "@mui/material/Button";
 import type { CSSObject, Components, ComponentsVariants, Theme } from "@mui/material/styles";
 import { stylesMode, varAlpha } from "../../styles";
-import { IconSize } from "components/fa-icon";
+import { IconSize } from "interface/components/fa-icon";
 
 // ----------------------------------------------------------------------
 

@@ -2,7 +2,7 @@ import { alertClasses } from "@mui/material/Alert";
 import type { AlertProps } from "@mui/material/Alert";
 import type { CSSObject, Components, Theme } from "@mui/material/styles";
 import { stylesMode, varAlpha } from "../../styles";
-import { FAIcon } from "components/fa-icon";
+import { FAIcon } from "interface/components/fa-icon";
 
 // ----------------------------------------------------------------------
 

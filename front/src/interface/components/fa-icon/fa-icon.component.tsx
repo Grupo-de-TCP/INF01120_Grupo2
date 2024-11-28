@@ -1,5 +1,5 @@
 import { Box, BoxProps, SxProps } from "@mui/material";
-import { ErrorBoundary } from "components/error-boundary/error-boundary.component";
+import { ErrorBoundary } from "interface/components/error-boundary/error-boundary.component";
 import { forwardRef, useEffect } from "react";
 
 const TooltipFixContainer = forwardRef(({ children, ...props }: any, ref) => {

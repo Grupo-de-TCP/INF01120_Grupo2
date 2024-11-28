@@ -3,7 +3,7 @@ import { svgIconClasses } from "@mui/material/SvgIcon";
 
 import type { Components, Theme } from "@mui/material/styles";
 import { menuItem, paper, varAlpha } from "../../styles";
-import { FAIcon } from "components/fa-icon";
+import { FAIcon } from "interface/components/fa-icon";
 
 // ----------------------------------------------------------------------
 

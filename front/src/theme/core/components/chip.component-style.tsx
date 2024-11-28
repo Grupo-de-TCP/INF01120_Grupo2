@@ -2,7 +2,7 @@ import { chipClasses } from "@mui/material/Chip";
 import type { ChipProps } from "@mui/material/Chip";
 import type { CSSObject, Components, ComponentsVariants, Theme } from "@mui/material/styles";
 import { stylesMode, varAlpha } from "../../styles";
-import { FAIcon, IconSize } from "components/fa-icon";
+import { FAIcon, IconSize } from "interface/components/fa-icon";
 
 // ----------------------------------------------------------------------
 
