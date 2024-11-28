@@ -1,7 +1,10 @@
-import { Typography } from "@mui/material"
+import { AppProvider } from "./app.provider"
+import { Layout } from "interface/core"
 
 export const AppRoot = () => {
   return (
-    <Typography variant="h1">Hello, world!</Typography>
+    <AppProvider>
+      <Layout/>
+    </AppProvider>
   )
 }
