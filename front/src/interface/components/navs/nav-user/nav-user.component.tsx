@@ -1,6 +1,6 @@
-import { AppBar, Avatar, Box, Tab, Tabs, Toolbar, Typography } from "@mui/material"
-import avatarFake from "assets/avatar-fake.png"
+import { AppBar, Box, Tab, Tabs, Toolbar } from "@mui/material"
 import { useMatch, useNavigate } from "react-router-dom"
+import { ToolbarMain } from "../toolbar-main.component"
 
 
 export const NavUser = () => {
@@ -17,19 +17,8 @@ export const NavUser = () => {
         color="default"
         elevation={10}
       >
-        <Toolbar sx={{ minHeight: "56px !important" }}>
-          <Typography variant="h5">
-            Split&Conquer
-          </Typography>
-          <Box flexGrow={1} />
-          <Avatar
-            src={avatarFake}
-            sx={{
-              width: 40,
-              height: 40,
-            }}
-          />
-        </Toolbar>
+        <ToolbarMain />
+
         <Toolbar sx={{ minHeight: "auto !important", justifyContent: "center" }}>
           <Tabs
             value={tab}
