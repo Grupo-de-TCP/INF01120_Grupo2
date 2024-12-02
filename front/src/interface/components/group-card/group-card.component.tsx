@@ -1,5 +1,4 @@
 import { Card, Stack, Typography } from "@mui/material"
-import { Box } from "@mui/system"
 import { Label } from "../label"
 import { FAIcon } from "../fa-icon"
 
@@ -11,7 +10,7 @@ interface GroupCardProps {
 }
 
 export const GroupCard: React.FC<GroupCardProps> = ({
-  id,
+  id: _id,
   title,
   debt,
   dividend,

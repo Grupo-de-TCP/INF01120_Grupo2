@@ -1,7 +1,7 @@
 import { pluginTypeCheck } from "@rsbuild/plugin-type-check";
 import { defineConfig } from "@rsbuild/core";
 import { pluginReact } from "@rsbuild/plugin-react";
-
+import { pluginEslint } from '@rsbuild/plugin-eslint';
 
 export default defineConfig(({ envMode }) => {
 
@@ -19,6 +19,14 @@ export default defineConfig(({ envMode }) => {
         },
       }),
       pluginTypeCheck(),
+      pluginEslint({
+        enable: true,
+        eslintPluginOptions: {
+          cwd: __dirname,
+          configType: 'flat',
+          ignorePatterns: ["node_modules", "dist"],
+        }
+      })
     ],
     dev: {
       assetPrefix: true,

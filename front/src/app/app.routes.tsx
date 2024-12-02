@@ -1,15 +1,19 @@
+import { LinearProgress } from "@mui/material"
 import { Box } from "@mui/system"
 import { NavUser } from "interface/components/navs/nav-user/nav-user.component"
-import React from "react"
+import React, { Suspense } from "react"
 import { Navigate, Outlet, useRoutes } from "react-router-dom"
 
 const GroupsModule = React.lazy(() => import("../interface/pages/groups/groups.module"))
+const ExpensesModule = React.lazy(() => import("../interface/pages/expenses/expenses.module"))
 
 const Layout = () => {
   return (
     <Box component="main">
       <NavUser />
-      <Outlet />
+      <Suspense fallback={<LinearProgress />}>
+        <Outlet />
+      </Suspense>
     </Box>
   )
 }
@@ -23,8 +27,8 @@ export const AppRoutes = () => {
         element: <GroupsModule />
       },
       {
-        path: "/debts/*",
-        element: <div />
+        path: "/expenses/*",
+        element: <ExpensesModule />
       },
       {
         path: "*",

@@ -38,7 +38,7 @@ export const NavUser = () => {
             }}
           >
             <Tab value="groups" label="Groupos" />
-            <Tab value="debts" label="Dividas" />
+            <Tab value="expenses" label="Dividas" />
           </Tabs>
         </Toolbar>
       </AppBar>

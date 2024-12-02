@@ -2,8 +2,8 @@ import type { ColorSystemOptions, Components, Theme } from "@mui/material/styles
 import COLORS from "../core/colors.json";
 import { components as coreComponents } from "../core/components";
 import { customShadows as coreCustomShadows, createShadowColor } from "../core/custom-shadows.config";
-import { grey as coreGreyPalette, primary as corePrimaryPalette } from "../core/palette.config";
-import { createPaletteChannel, hexToRgbChannel } from "../styles";
+import { primary as corePrimaryPalette } from "../core/palette.config";
+import { createPaletteChannel } from "../styles";
 import type { ThemeStoreValue } from "../theme.service";
 import type { ThemeComponents, ThemeUpdateOptions } from "../types.types";
 import PRIMARY_COLOR from "./primary-color.json";

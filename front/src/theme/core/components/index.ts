@@ -19,7 +19,6 @@ import { divider } from "./divider.component-style";
 import { drawer } from "./drawer.component-style";
 import { form } from "./form.component-style";
 import { link } from "./link.component-style";
-/* eslint-disable import/max-dependencies */
 import { list } from "./list.component-style";
 import { menu } from "./menu.component-style";
 import { pagination } from "./pagination.component-style";

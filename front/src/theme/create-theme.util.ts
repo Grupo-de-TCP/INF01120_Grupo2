@@ -6,7 +6,7 @@ import { overridesTheme } from "./overrides-theme.config";
 import type { ThemeStoreValue } from "./theme.service";
 import { updateComponentsWithSettings, updateCoreWithSettings } from "./with-settings/update-theme.theme-settings";
 
-import type { ThemeLocaleComponents, ThemeUpdateOptions } from "./types.types";
+import type { ThemeUpdateOptions } from "./types.types";
 
 // ----------------------------------------------------------------------
 declare module '@mui/material/styles' {
