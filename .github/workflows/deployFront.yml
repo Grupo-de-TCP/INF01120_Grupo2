@@ -38,7 +38,7 @@ jobs:
       run: pnpm install
 
     - name: Build App
-      run: pnpm run ${{ inputs.build_command }}
+      run: pnpm run build
 
     - name: Deploy
       id: buildproductiondeploy

@@ -17,7 +17,7 @@ export const NavUser = () => {
         color="default"
         elevation={10}
       >
-        <Toolbar>
+        <Toolbar sx={{ minHeight: "56px !important" }}>
           <Typography variant="h5">
             Split&Conquer
           </Typography>
@@ -30,10 +30,10 @@ export const NavUser = () => {
             }}
           />
         </Toolbar>
-        <Toolbar sx={{ minHeight: "auto", justifyContent: "center" }}>
+        <Toolbar sx={{ minHeight: "auto !important", justifyContent: "center" }}>
           <Tabs
             value={tab}
-            onChange={(_e,v) => {
+            onChange={(_e, v) => {
               navigate(`/${v}`)
             }}
           >
