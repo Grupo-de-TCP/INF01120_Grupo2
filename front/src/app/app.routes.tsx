@@ -5,8 +5,10 @@ import { NavUser } from "interface/components/navs/nav-user/nav-user.component"
 import React, { Suspense } from "react"
 import { Navigate, Outlet, useRoutes } from "react-router-dom"
 
-const GroupsModule = React.lazy(() => import("../interface/pages/groups/groups.module"))
-const ExpensesModule = React.lazy(() => import("../interface/pages/expenses/expenses.module"))
+const ListGroupPage = React.lazy(() => import("../interface/pages/groups/list-group.page"))
+const ListExpensesPage = React.lazy(() => import("../interface/pages/expenses/list-expenses.page"))
+const ListGroupUsersPage = React.lazy(() => import("interface/pages/groups/list-group-users.page"))
+const ListGroupExpensesPage = React.lazy(() => import("interface/pages/expenses/list-group-expenses.page"))
 
 const MainLayout = () => {
   return (
@@ -37,11 +39,11 @@ export const AppRoutes = () => {
       children: [
         {
           path: "/groups/*",
-          element: <GroupsModule />
+          element: <ListGroupPage />
         },
         {
           path: "/expenses/*",
-          element: <ExpensesModule />
+          element: <ListExpensesPage />
         },
       ]
     },
@@ -51,11 +53,11 @@ export const AppRoutes = () => {
       children: [
         {
           path: "users",
-          element: <div />
+          element: <ListGroupUsersPage />
         },
         {
           path: "debts",
-          element: <div />
+          element: <ListGroupExpensesPage />
         },
         {
           path: "*",

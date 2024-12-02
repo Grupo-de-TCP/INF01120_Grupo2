@@ -27,7 +27,7 @@ export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
               color="success"
               startIcon={<FAIcon icon="money-bill" />}
             >
-              Te devolvem: R$ {(debt * -1).toFixed(2)}
+              Te devolve: R$ {(debt * -1).toFixed(2)}
             </Label>
           )}
           {(debt > 0) && (

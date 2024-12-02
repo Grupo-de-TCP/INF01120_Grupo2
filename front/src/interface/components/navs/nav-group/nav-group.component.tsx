@@ -22,6 +22,9 @@ export const NavGroup = () => {
         <Toolbar sx={{ minHeight: "auto !important" }} disableGutters>
           <IconButton
             color="primary"
+            onClick={() => {
+              navigate("/groups")
+            }}
           >
             <FAIcon
               icon="chevron-left"
