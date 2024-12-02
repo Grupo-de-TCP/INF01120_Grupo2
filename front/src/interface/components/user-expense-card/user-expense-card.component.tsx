@@ -1,4 +1,4 @@
-import { Card, IconButton, Stack, Typography } from "@mui/material"
+import { Box, Card, IconButton, Stack, Typography } from "@mui/material"
 import { Label } from "../label"
 import { FAIcon } from "../fa-icon"
 
@@ -9,16 +9,19 @@ interface UserExpenseCardProps {
 }
 
 export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
+  id,
   userName,
   debt,
 }) => {
+
+
   return (
     <Card>
-      <Stack direction="row" gap={1}>
-        <Stack gap={1}>
-          <Typography variant="h6" >
-            {userName}
-          </Typography>
+      <Stack p={2} direction="row" alignItems="center" gap={.5}>
+        <Typography variant="h6" flex={1} >
+          {userName}
+        </Typography>
+        <Box>
           {(debt < 0) && (
             <Label
               color="success"
@@ -42,9 +45,13 @@ export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
               Quitado
             </Label>
           )}
-        </Stack>
+        </Box>
         <IconButton
           color="primary"
+          onClick={() => {
+            const c = window.confirm("Você deseja quitar essa dívida?")
+            console.log(id, c)
+          }}
         >
           <FAIcon icon="circle-dollar-to-slot" />
         </IconButton>
