@@ -1,19 +1,32 @@
 package com.splitandconquer.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.splitandconquer.api.ApiApplication;
 import com.splitandconquer.api.views.GroupViews;
+import java.util.ArrayList;
 
 /**
  *
- * @author petry
+ * @author petry, ceccato
  */
 public class User {
+    @JsonView({GroupViews.SingleGroupView.class, GroupViews.ExpensesView.class})
     private int id;
+    
+    @JsonView({GroupViews.SingleGroupView.class, GroupViews.ExpensesView.class})
     private String name;
+    
+    @JsonIgnore
+    private ArrayList<Balance> balances = new ArrayList<Balance>();
     
     public User(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+    
+    public void addBalance(Balance balance) {
+        this.balances.add(balance);
     }
     
     public int getId() {
@@ -24,8 +37,29 @@ public class User {
         return this.name;
     }
     
+    public ArrayList<Balance> getBalances() {
+        return this.balances;
+    }
+    
+    public Balance getBalanceByUser(int userId) {
+        for (Balance balance : this.balances) {
+            if (userId == balance.getUser().getId()) {
+                return balance;
+            }
+        }
+        
+        return null;
+    }
+    
+    @JsonView(GroupViews.SingleGroupView.class)
     public float getDebt() {
-        return 100;
+        User loggedUser = ApiApplication.getLoggedUser();
+        
+        if (loggedUser.getId() == this.id) {
+            return 0;
+        }
+        
+        return -loggedUser.getBalanceByUser(this.id).getAmount();
     }
     
     public void setId(int id) {
@@ -34,5 +68,9 @@ public class User {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setBalances(ArrayList<Balance> balances) {
+        this.balances = balances;
     }
 }

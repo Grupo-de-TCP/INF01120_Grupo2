@@ -1,0 +1,112 @@
+GET - /groups
+Response = {
+    success: true,
+    content: {
+        id: String,
+        title: String,
+        debt: Number,
+        dividend: Number,
+    }[]
+}
+
+GET - /users
+Response = {
+    success: true,
+    content: {
+        id: String,
+        name: String,
+        debt: Number,
+    }[]
+}
+
+POST - /create-payment
+Payload = {
+    payerId: String,
+    receiverId: String,
+    amount: Number,
+    groupId?: String,
+}
+
+GET - /groups/:id
+Response = {
+    success: true,
+    content: {
+        id: String,
+        title: String,
+        debt: Number,
+        dividend: Number,
+        members: {
+            id: String,
+            name: String,
+            debt: Number,
+        }[]
+    }
+}
+
+GET - /groups/participants/:id
+Response = {
+    success: true,
+    content: {
+        id: String,
+        title: String,
+        amount: Number,
+        participants: {
+            id: String,
+            name: String,
+        }[],
+        Payer: String
+    }
+}
+
+POST - /create-expense
+Payload = {
+    title: String,
+    amount: Number,
+    participants: String[],
+    payerId: String,
+    groupId: String,
+}
+
+// ENTIDADES
+interface Group {
+    id: string;
+    title: string;
+}
+
+interface User {
+    id: string;
+    name: string;
+}
+
+interface Payment {
+    payerId: string;
+    receiverId: string;
+    amount: number;
+    groupId?: string;
+}
+
+interface Expense {
+    title: string;
+    amount: number;
+    participants: string[];
+    payerId: string;
+    groupId: string;
+}
+
+
+create-payment
+{
+    "payerId": 0,
+    "receiverId": 1,
+    "amount": 50,
+    "groupId": 0
+}
+
+create-expense
+{
+    "title": "Gasolina2",
+    "amount": 1000,
+    "participants": [0,1,2,3],
+    "payerId": 0,
+    "groupId": 0
+}
