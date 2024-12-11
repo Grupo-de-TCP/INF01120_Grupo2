@@ -29,6 +29,24 @@ public class User {
         this.balances.add(balance);
     }
     
+    public boolean updateDividend(int receiverId, int debtorId, float amount) {
+        Balance balance = null;
+        
+        if (this.id == receiverId && this.id != debtorId) { // Se o usuário é o recebidor, aumenta o dívidendo
+            balance = this.getBalanceByUser(debtorId);
+        } else if (this.id == debtorId) { // Se o usuário é o devedor, diminui o dívidendo
+            balance = this.getBalanceByUser(receiverId);
+            amount = -amount;
+        }
+        
+        if (balance != null) {
+            balance.updateDividend(amount);
+            return true;
+        }
+        
+        return false;
+    }
+    
     public int getId() {
         return this.id;
     }
@@ -59,7 +77,7 @@ public class User {
             return 0;
         }
         
-        return -loggedUser.getBalanceByUser(this.id).getAmount();
+        return -loggedUser.getBalanceByUser(this.id).getDividend();
     }
     
     public void setId(int id) {

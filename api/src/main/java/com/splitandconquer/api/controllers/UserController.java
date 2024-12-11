@@ -3,6 +3,7 @@ package com.splitandconquer.api.controllers;
 import com.splitandconquer.api.ApiApplication;
 import com.splitandconquer.api.models.Balance;
 import com.splitandconquer.api.models.User;
+import com.splitandconquer.api.responses.user.*;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +37,3 @@ public class UserController {
         return newUser;
     };
 }
-
-record AllUsersResponse(boolean success, ArrayList<User> content) { };

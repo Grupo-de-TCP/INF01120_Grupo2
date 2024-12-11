@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.splitandconquer.api.models;
 
 /**
@@ -10,30 +6,33 @@ package com.splitandconquer.api.models;
  */
 public class Balance {
     private User user;
-    private float amount;
     
-    public Balance(User user, float amount) {
+    // Negativo = dívida do usuário logado com o user do balance
+    // Positivo = dividendo do usuário logado com o user do balance
+    private float dividend;
+    
+    public Balance(User user, float dividend) {
         this.user = user;
-        this.amount = amount;
+        this.dividend = dividend;
     }
     
-    public void updateAmount(float amount) {
-        this.amount = (float)Math.round((this.amount + amount) * 100) / 100;
+    public void updateDividend(float dividend) {
+        this.dividend = (float)Math.round((this.dividend + dividend) * 100) / 100;
     }
     
     public User getUser() {
         return this.user;
     }
     
-    public float getAmount() {
-        return this.amount;
+    public float getDividend() {
+        return this.dividend;
     }
     
     public void setUser(User user) {
         this.user = user;
     }
     
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setDividend(float dividend) {
+        this.dividend = dividend;
     }
 }
