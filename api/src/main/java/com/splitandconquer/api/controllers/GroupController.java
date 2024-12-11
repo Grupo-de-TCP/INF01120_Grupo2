@@ -3,6 +3,7 @@ package com.splitandconquer.api.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.splitandconquer.api.models.Expense;
 import com.splitandconquer.api.models.Group;
+import com.splitandconquer.api.responses.group.*;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,12 @@ public class GroupController {
     
     @GetMapping("/{id}")
     @JsonView(GroupViews.SingleGroupView.class)
-    public GroupResponse getGroup(@PathVariable int id) {
+    public SingleGroupResponse getGroup(@PathVariable int id) {
         if (id < 0 || id >= GroupController.allGroups.size()) {
-           return new GroupResponse(false, null);
+           return new SingleGroupResponse(false, null);
         }
         
-        return new GroupResponse(true, GroupController.findGroup(id));
+        return new SingleGroupResponse(true, GroupController.findGroup(id));
     }
     
     @GetMapping("{id}/expenses")
@@ -81,15 +82,3 @@ public class GroupController {
         return group;
     }
 }
-
-@JsonView(GroupViews.AllGroupsView.class)
-record AllGroupsResponse(boolean success, ArrayList<Group> content) { }
-
-@JsonView(GroupViews.SingleGroupView.class)
-record GroupResponse(boolean success, Group content) { }
-
-@JsonView(GroupViews.ExpensesView.class)
-record GroupSingleExpenseResponse(boolean success, Expense content) { }
-
-@JsonView(GroupViews.ExpensesView.class)
-record GroupAllExpensesResponse(boolean success, ArrayList<Expense> content) { }

@@ -3,12 +3,9 @@ package com.splitandconquer.api;
 import com.splitandconquer.api.controllers.ExpenseController;
 import com.splitandconquer.api.controllers.GroupController;
 import com.splitandconquer.api.controllers.UserController;
-import com.splitandconquer.api.models.Expense;
-import com.splitandconquer.api.models.ExpenseBody;
 import com.splitandconquer.api.models.Group;
 import com.splitandconquer.api.models.User;
-import java.util.Arrays;
-import java.util.ArrayList;
+import com.splitandconquer.api.payloads.ExpensePayload;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -34,10 +31,10 @@ public class ApiApplication {
         group.addMember(user2);
         group.addMember(user3);
         
-        ExpenseController.createExpense(new ExpenseBody("Gasolina", 400, new int[]{0,1,2,3}, 0, 0));
-        ExpenseController.createExpense(new ExpenseBody("Almoço", 100, new int[]{0,2,3}, 1, 0));
-        ExpenseController.createExpense(new ExpenseBody("Compras", 150, new int[]{1,2,3}, 0, 0));
-        ExpenseController.createExpense(new ExpenseBody("Aposta", 100, new int[]{3}, 0, 0));
+        ExpenseController.createExpense(new ExpensePayload("Gasolina", 400, new int[]{0,1,2,3}, 0, 0));
+        ExpenseController.createExpense(new ExpensePayload("Almoço", 100, new int[]{0,2,3}, 1, 0));
+        ExpenseController.createExpense(new ExpensePayload("Compras", 150, new int[]{1,2,3}, 0, 0));
+        ExpenseController.createExpense(new ExpensePayload("Aposta", 100, new int[]{3}, 0, 0));
 
 	SpringApplication.run(ApiApplication.class, args);
     }
