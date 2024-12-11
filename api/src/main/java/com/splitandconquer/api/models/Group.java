@@ -60,6 +60,11 @@ public class Group {
         return this.expenses;
     }
     
+    /**
+     * Percorre a lista de expenses e soma dívida para cada despesa que o usuário logado
+     * é participante e não é o pagante original.
+     * @return float
+     */
     @JsonView({GroupViews.AllGroupsView.class, GroupViews.SingleGroupView.class})
     public float getDebt() {
         User loggedUser = ApiApplication.getLoggedUser();
@@ -82,6 +87,11 @@ public class Group {
         return debt;
     }
     
+    /**
+     * Percorre a lista de expenses e soma dividendo para cada despesa que o usuário logado
+     * é o pagante original.
+     * @return float
+     */
     @JsonView({GroupViews.AllGroupsView.class, GroupViews.SingleGroupView.class})
     public float getDividend() {
         User loggedUser = ApiApplication.getLoggedUser();
