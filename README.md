@@ -147,18 +147,17 @@ Retorna todas despesas de um grupo informado.
 {
     success: boolean,
     content: {
+        id: int,
+        title: String,
+        amount: float,
+        payer: {
             id: int,
-            title: String,
-            amount: float,
-            payer: {
-                id: int,
-                name: String
-            },
-            participants: {
-                id: int,
-                name: String
-            }[],
-        }
+            name: String
+        },
+        participants: {
+            id: int,
+            name: String
+        }[],
      }[]
 }
 ```
@@ -181,18 +180,17 @@ Retorna a despesa informada de um dado grupo.
 {
     success: boolean,
     content: {
+        id: int,
+        title: String,
+        amount: float,
+        payer: {
             id: int,
-            title: String,
-            amount: float,
-            payer: {
-                id: int,
-                name: String
-            },
-            participants: {
-                id: int,
-                name: String
-            }[],
-        }
+            name: String
+        },
+        participants: {
+            id: int,
+            name: String
+        }[],
      }
 }
 ```
