@@ -59,7 +59,6 @@ Para visualizar o design da interface da aplicação, acesse o link do Figma aba
 - Java 17 (JDK e JRE)
 - Netbeans 23
 
-
 ### Como Rodar Localmente
 
 Abra o diretório **api** como um projeto dentro do Netbeans. Dentro do projeto, faça o build, abra o arquivo **ApiApplication.java** e execute ele (Shift + F6). Verifique a porta definida pelo Tomcat no output do console (costuma ser 8080), pois ela será usada para realizar as consultas no localhost. Utilize algum software para testar as consultas da API (como Postman). 
