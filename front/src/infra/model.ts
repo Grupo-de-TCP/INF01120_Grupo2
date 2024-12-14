@@ -1,19 +1,38 @@
-interface GroupI {
-    id: string,
+export interface BaseResponseI<T, E = string> {
+    success: boolean,
+    content: T,
+    error?: E
+}
+
+export interface GroupListI {
+    id: number,
+    title: string,
+    debt: number,
+    dividend: number,
+}
+export interface GroupI {
+    id: number,
     title: string,
     debt: number,
     dividend: number,
     members: UserI[]
 }
 
-interface ExpenseI {
-    id: string,
-    title: string,
-    debt: number,
-    dividend: number
+export interface ExpenseUserI {
+    id: number,
+    name: string
 }
 
-interface UserI {
-    id: string,
+export interface ExpenseI {
+    id: number,
+    payer: ExpenseUserI,
+    title: string,
+    amount: number,
+    participants: ExpenseUserI[]
+}
+
+export interface UserI {
+    id: number,
     name: string,
+    debt: number,
 }
