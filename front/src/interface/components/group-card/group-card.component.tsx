@@ -1,13 +1,14 @@
-import { Card, CardActionArea, Stack, Typography } from "@mui/material"
+import { Card, CardActionArea, Skeleton, Stack, Typography } from "@mui/material"
 import { Label } from "../label"
 import { FAIcon } from "../fa-icon"
 import { useNavigate } from "react-router-dom"
 
 interface GroupCardProps {
-  id: string,
+  id: number,
   title: string,
   debt: number,
   dividend: number,
+  isWaiting?: boolean,
 }
 
 export const GroupCard: React.FC<GroupCardProps> = ({
@@ -15,26 +16,28 @@ export const GroupCard: React.FC<GroupCardProps> = ({
   title,
   debt,
   dividend,
+  isWaiting
 }) => {
 
   const navigate = useNavigate();
 
   return (
     <Card>
-      <CardActionArea 
+      <CardActionArea
+        disabled={isWaiting}
         onClick={() => {
           navigate(`/group/${id}/debts`)
         }}
       >
         <Stack p={2} gap={2}>
           <Typography variant="h6" >
-            {title}
+            {isWaiting ? <Skeleton /> : title}
           </Typography>
           <Stack
             direction="row"
             gap={1}
           >
-            {Boolean(dividend) && (
+            {Boolean(dividend && !isWaiting) && (
               <Label
                 color="success"
                 startIcon={<FAIcon icon="money-bill" />}
@@ -42,7 +45,7 @@ export const GroupCard: React.FC<GroupCardProps> = ({
                 Te devolvem: R$ {dividend.toFixed(2)}
               </Label>
             )}
-            {Boolean(debt) && (
+            {Boolean(debt && !isWaiting) && (
               <Label
                 color="warning"
                 startIcon={<FAIcon icon="circle-dollar-to-slot" />}
@@ -50,6 +53,8 @@ export const GroupCard: React.FC<GroupCardProps> = ({
                 Tu deve:  R$ {debt.toFixed(2)}
               </Label>
             )}
+            {isWaiting && <Skeleton width={120} />}
+            {isWaiting && <Skeleton width={120} />}
           </Stack>
         </Stack>
       </CardActionArea>

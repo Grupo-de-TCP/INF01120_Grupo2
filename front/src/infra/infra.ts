@@ -7,7 +7,7 @@ const groupsById = (id?: number) => queryOptions({
     queryFn: async () => {
         return api.get<BaseResponseI<GroupI>>(`/groups/${id}`).then(e => e.data.content)
     },
-    enabled: Boolean(id)
+    enabled: Number.isInteger(id)
 })
 
 const groups = queryOptions({
@@ -29,7 +29,7 @@ const expenseByIds = (groupId?: number, expenseId?: number) => queryOptions({
     queryFn: async () => {
         return api.get<BaseResponseI<ExpenseI>>(`/groups/${groupId}/expenses/${expenseId}`).then(e => e.data.content)
     },
-    enabled: Boolean(groupId) && Boolean(expenseId)
+    enabled: Number.isInteger(groupId) && Number.isInteger(expenseId)
 })
 
 
