@@ -24,6 +24,14 @@ const users = queryOptions({
     },
 })
 
+const expenseByGroupId = (groupId?: number) => queryOptions({
+    queryKey: ['expenses', groupId],
+    queryFn: async () => {
+        return api.get<BaseResponseI<ExpenseI[]>>(`/groups/${groupId}/expenses`).then(e => e.data.content)
+    },
+    enabled: Number.isInteger(groupId)
+})
+
 const expenseByIds = (groupId?: number, expenseId?: number) => queryOptions({
     queryKey: ['expense', groupId, expenseId],
     queryFn: async () => {
@@ -37,5 +45,6 @@ export const QueryOptionsAPI = {
     users,
     groups,
     groupsById,
-    expenseByIds
+    expenseByIds,
+    expenseByGroupId
 }

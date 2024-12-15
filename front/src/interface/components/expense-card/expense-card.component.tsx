@@ -1,23 +1,24 @@
 import React, { useMemo, useState } from "react";
-import { Card, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button, CardActionArea, Divider, IconButton } from "@mui/material";
+import { Card, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button, CardActionArea, Divider, IconButton, Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FAIcon } from "../fa-icon";
+import { ExpenseI } from "infra/model";
 
-export interface ExpenseCardProps {
-  id: string;
-  title: string;
-  amount: number;
-  payer?: string;
-  dividedIn: number;
+export interface ExpenseCardProps extends ExpenseI {
+  isWaiting?: boolean;
 }
 
 export const ExpenseCard: React.FC<ExpenseCardProps> = ({
   amount,
   title,
-  dividedIn,
+  id: _id, // TODO delete,
+  participants,
+  isWaiting,
   payer,
 }) => {
   const [open, setOpen] = useState(false);
+
+  const dividedIn = useMemo(() => participants.length, [participants]);
 
   const divAm = useMemo(() => {
     if (payer) {
@@ -26,17 +27,12 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
     return (amount / dividedIn) * (dividedIn - 1);
   }, [amount, dividedIn, payer]);
 
-  const participants = useMemo(() => {
-    const names = ["Alice", "Bob", "Charlie", "David", "Eve"];
-    return names.slice(0, dividedIn);
-  }, [dividedIn]);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleDelete = () => {
     const c = window.confirm("Você deseja excluir essa despesa?");
-    if(c){
+    if (c) {
       console.log("Excluindo despesa...");
       handleClose();
     }
@@ -47,23 +43,31 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
       <Card>
         <CardActionArea
           onClick={handleOpen}
+          disabled={isWaiting}
         >
-          <Stack px={2} py={1.5} direction="row" justifyContent="space-between">
-            <Stack gap={0.5}>
-              <Typography variant="subtitle1">{title}</Typography>
-              <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
-                {`${payer || "Você"} pagou R$ ${amount.toFixed(2)}`}
-              </Typography>
+          {isWaiting ? (
+            <Stack px={2} py={1.5} gap={0.5}>
+              <Skeleton/>
+              <Skeleton/>
             </Stack>
-            <Stack gap={0.5} color={payer ? "error.main" : "success.main"}>
-              <Typography variant="caption" sx={{ whiteSpace: "nowrap" }} textAlign="right">
-                {payer ? "Você pegou emprestado" : "Você emprestou"}
-              </Typography>
-              <Typography variant="subtitle1" textAlign="right">
-                {`R$ ${divAm.toFixed(2)}`}
-              </Typography>
+          ) : (
+            <Stack px={2} py={1.5} direction="row" justifyContent="space-between">
+              <Stack gap={0.5}>
+                <Typography variant="subtitle1">{title}</Typography>
+                <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
+                  {`${payer.name || "Você"} pagou R$ ${amount.toFixed(2)}`}
+                </Typography>
+              </Stack>
+              <Stack gap={0.5} color={payer ? "error.main" : "success.main"}>
+                <Typography variant="caption" sx={{ whiteSpace: "nowrap" }} textAlign="right">
+                  {payer ? "Você pegou emprestado" : "Você emprestou"}
+                </Typography>
+                <Typography variant="subtitle1" textAlign="right">
+                  {`R$ ${divAm.toFixed(2)}`}
+                </Typography>
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </CardActionArea>
       </Card>
 
@@ -91,15 +95,15 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
             {`Valor total: R$ ${amount.toFixed(2)}`}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {`Pago por: ${payer || "Você"}`}
+            {`Pago por: ${payer.name || "Você"}`}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {`Participantes:`}
           </Typography>
           <ul>
-            {participants.map((name, index) => (
+            {participants.map((p, index) => (
               <li key={index}>
-                <Typography variant="body2">{name} (R$ {(amount / dividedIn).toFixed(2)})</Typography>
+                <Typography variant="body2">{p.name} (R$ {(amount / dividedIn).toFixed(2)})</Typography>
               </li>
             ))}
           </ul>
