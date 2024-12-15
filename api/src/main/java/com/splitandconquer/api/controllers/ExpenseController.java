@@ -41,7 +41,7 @@ public class ExpenseController {
         
         ExpenseController.updateBalances(expensePayload, participants);
         
-        int expenseId = group.getExpenses().size();
+        int expenseId = group.getCurrentExpenseId();
         Expense newExpense = new Expense(expenseId, payer, expensePayload.title(), expensePayload.amount(), participants);
         group.addExpense(newExpense);
         

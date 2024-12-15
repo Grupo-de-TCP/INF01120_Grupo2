@@ -1,5 +1,6 @@
 package com.splitandconquer.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.splitandconquer.api.ApiApplication;
 import com.splitandconquer.api.views.GroupViews;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
  * @author petry, ceccato
  */
 public class Group {
+    @JsonIgnore
+    private int currentExpenseId = 0;
+    
     @JsonView({GroupViews.AllGroupsView.class, GroupViews.SingleGroupView.class})
     private int id;
     
@@ -32,6 +36,7 @@ public class Group {
     
     public void addExpense(Expense expense) {
         this.expenses.add(expense);
+        this.currentExpenseId += 1;
     }
     
     public User findMember(int memberId) {
@@ -42,6 +47,10 @@ public class Group {
         }
         
         return null;
+    }
+    
+    public int getCurrentExpenseId() {
+        return this.currentExpenseId;
     }
     
     public int getId() {
@@ -58,6 +67,16 @@ public class Group {
     
     public ArrayList<Expense> getExpenses() {
         return this.expenses;
+    }
+    
+    public Expense getExpense(int id) {
+        for (Expense expense : this.expenses) {
+            if (expense.getId() == id) {
+                return expense;
+            }
+        }
+        
+        return null;
     }
     
     /**
