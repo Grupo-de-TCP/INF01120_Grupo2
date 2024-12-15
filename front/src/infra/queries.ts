@@ -28,6 +28,12 @@ const users = queryOptions({
         return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content.filter(e => e.id !== USER_LOGGED_KEY))
     },
 })
+const usersWithMe = queryOptions({
+    queryKey: ['users'],
+    queryFn: async () => {
+        return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content)
+    },
+})
 
 const expenseByGroupId = (groupId?: number) => queryOptions({
     queryKey: ['expenses', groupId],
@@ -49,6 +55,7 @@ const useInvalidateQuery = () => {
     const queryClient = useQueryClient()
     return useCallback(() => {
         queryClient.invalidateQueries(users)
+        queryClient.invalidateQueries(usersWithMe)
         queryClient.invalidateQueries(groups)
         queryClient.invalidateQueries({
             queryKey: ['group']
@@ -64,6 +71,7 @@ const useInvalidateQuery = () => {
 
 export const QueryOptionsAPI = {
     users,
+    usersWithMe,
     groups,
     groupsById,
     expenseByIds,

@@ -10,9 +10,67 @@ import {
 } from "@mui/material";
 import { CreateExpenseService } from "./create-expense-modal.service";
 import { FormFieldAutocomplete, FormFieldText } from "../form";
+import { useQuery } from "@tanstack/react-query";
+import { QueryOptionsAPI } from "infra/queries";
 
-const groups = ["Amigos", "Família", "Trabalho"];
-const users = ["Alice", "Bob", "Charlie", "David", "Eve"];
+const AutoCompleteGrupos = () => {
+
+  const {
+    data: groups
+  } = useQuery(QueryOptionsAPI.groups)
+
+  return (
+    <FormFieldAutocomplete
+      control={CreateExpenseService.form.control}
+      name="group"
+      label="Grupo"
+      items={(groups?.map((gp) => ({ id: String(gp.id), label: gp.title }))) || []}
+    />
+  )
+}
+
+const AutoCompletePayer = () => {
+
+  const {
+    data: users
+  } = useQuery(QueryOptionsAPI.usersWithMe)
+
+  return (
+    <FormFieldAutocomplete
+      control={CreateExpenseService.form.control}
+      name="payer"
+      label="Pagante"
+      items={users?.map((u) => ({ id: String(u.id), label: u.name })) || []}
+    />
+  )
+}
+
+const AutoCompleteDivideAmong = () => {
+
+  const {
+    data: users
+  } = useQuery(QueryOptionsAPI.usersWithMe)
+
+  return (
+    <FormFieldAutocomplete
+      control={CreateExpenseService.form.control}
+      name="dividedAmong"
+      label="Dividido Entre"
+      multiple
+      items={users?.map((u) => ({ id: String(u.id), label: u.name })) || []}
+    />
+  )
+}
+
+const SubmitButton = () => {
+  const onSave = CreateExpenseService.useOnSave();
+  const isSubmitting = CreateExpenseService.form.useStoreForm(e => e.isSubmitting)
+  return (
+    <Button onClick={onSave} disabled={isSubmitting} variant="contained" color="primary">
+      Salvar
+    </Button>
+  )
+}
 
 export const CreateExpenseModal = () => {
 
@@ -20,7 +78,6 @@ export const CreateExpenseModal = () => {
     onClose,
     open
   } = CreateExpenseService.form.useStore(({ onClose, open }) => ({ onClose, open }));
-  const onSave = CreateExpenseService.useOnSave();
 
   return (
     <Dialog
@@ -48,32 +105,14 @@ export const CreateExpenseModal = () => {
             label="Valor"
             type="number"
           />
-          <FormFieldAutocomplete
-            control={CreateExpenseService.form.control}
-            name="group"
-            label="Grupo"
-            items={groups.map((groupName) => ({ id: groupName, label: groupName }))}
-          />
-          <FormFieldAutocomplete
-            control={CreateExpenseService.form.control}
-            name="payer"
-            label="Pagante"
-            items={users.map((groupName) => ({ id: groupName, label: groupName }))}
-          />
-          <FormFieldAutocomplete
-            control={CreateExpenseService.form.control}
-            name="dividedAmong"
-            label="Dividido Entre"
-            multiple
-            items={users.map((groupName) => ({ id: groupName, label: groupName }))}
-          />
+          <AutoCompleteGrupos />
+          <AutoCompletePayer />
+          <AutoCompleteDivideAmong />
         </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
-        <Button onClick={onSave} variant="contained" color="primary">
-          Salvar
-        </Button>
+        <SubmitButton />
       </DialogActions>
     </Dialog>
   );

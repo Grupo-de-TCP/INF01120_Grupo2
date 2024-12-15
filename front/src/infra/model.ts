@@ -41,9 +41,9 @@ export interface UserI {
 export interface CreateExpensePayload {
     title: string,
     amount: number,
-    participants: string[],
-    payerId: string,
-    groupId: string,
+    participants: number[],
+    payerId: number,
+    groupId: number,
 }
 
 export interface CreatePaymentPayload {
