@@ -18,7 +18,7 @@ public class ApiApplication {
     private static User loggedUser = null;
     
     public static void main(String[] args) {
-        User user0 = UserController.createUser("Visitante");
+        User user0 = UserController.createUser("Você");
         ApiApplication.loggedUser = user0;
         
         User user1 = UserController.createUser("Ceccato");
