@@ -4,6 +4,7 @@ import { FAIcon } from "../fa-icon"
 import { useCallback } from "react"
 import { MutationAPI } from "infra/mutations"
 import toast from "react-hot-toast"
+import { USER_LOGGED_KEY } from "infra/user"
 
 interface UserExpenseCardProps {
   id: number,
@@ -31,8 +32,8 @@ export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
     if (c) {
       toast.promise(payDebt({
         amount: Math.abs(debt),
-        payerId: id,
-        receiverId: id,
+        payerId: debt ? id : USER_LOGGED_KEY,
+        receiverId: debt ? USER_LOGGED_KEY : id,
         groupId
       }), {
         loading: "Pagando...",
