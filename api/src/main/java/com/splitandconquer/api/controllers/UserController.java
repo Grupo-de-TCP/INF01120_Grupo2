@@ -24,7 +24,12 @@ public class UserController {
     }
     
     public static User createUser(String name) {
-        int id = UserController.allUsers.size();
+        int id = UserController.allUsers.size() - 1;
+        
+        if (ApiApplication.getLoggedUser() == null) {
+            id = 1000;
+        }
+        
         User newUser = new User(id, name);
         
         User loggedUser = ApiApplication.getLoggedUser();
