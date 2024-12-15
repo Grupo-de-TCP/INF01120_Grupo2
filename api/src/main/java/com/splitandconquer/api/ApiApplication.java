@@ -33,10 +33,10 @@ public class ApiApplication {
         group.addMember(user3);
         group.addMember(user4);
         
-        ExpenseController.createExpense(new ExpensePayload("Gasolina", 400, new int[]{0,1,2,3}, 0, 0));
-        ExpenseController.createExpense(new ExpensePayload("Almoço", 100, new int[]{0,2,3}, 1, 0));
-        ExpenseController.createExpense(new ExpensePayload("Compras", 150, new int[]{1,2,3}, 0, 0));
-        ExpenseController.createExpense(new ExpensePayload("Aposta", 100, new int[]{3}, 0, 0));
+        ExpenseController.createExpense(new ExpensePayload("Gasolina", 400, new int[]{1000,0,1,2,3}, 1000, 0));
+        ExpenseController.createExpense(new ExpensePayload("Almoço", 100, new int[]{1000,0,2,3}, 1, 0));
+        ExpenseController.createExpense(new ExpensePayload("Compras", 150, new int[]{1,2,3}, 1000, 0));
+        ExpenseController.createExpense(new ExpensePayload("Aposta", 100, new int[]{3}, 0, 1000));
 
 	SpringApplication.run(ApiApplication.class, args);
     }
