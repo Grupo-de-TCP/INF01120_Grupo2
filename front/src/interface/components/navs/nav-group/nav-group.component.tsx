@@ -2,6 +2,8 @@ import { AppBar, Box, IconButton, Tab, Tabs, Toolbar, Typography } from "@mui/ma
 import { useMatch, useNavigate } from "react-router-dom"
 import { ToolbarMain } from "../toolbar-main.component"
 import { FAIcon } from "interface/components/fa-icon"
+import { useQuery } from "@tanstack/react-query"
+import { QueryOptionsAPI } from "infra/queries"
 
 
 export const NavGroup = () => {
@@ -10,6 +12,10 @@ export const NavGroup = () => {
   const tab = match?.params['*'] || "groups"
 
   const navigate = useNavigate();
+
+  const {
+    data: group
+  } = useQuery(QueryOptionsAPI.groupsById(Number(match?.params.id)))
 
   return (
     <Box pb="144px">
@@ -31,7 +37,7 @@ export const NavGroup = () => {
             />
           </IconButton>
           <Typography variant="subtitle1">
-            Group Name
+            {group?.title}
           </Typography>
         </Toolbar>
 

@@ -26,7 +26,7 @@ export const NavUser = () => {
               navigate(`/${v}`)
             }}
           >
-            <Tab value="groups" label="Groupos" />
+            <Tab value="groups" label="Grupos" />
             <Tab value="expenses" label="Dividas" />
           </Tabs>
         </Toolbar>
