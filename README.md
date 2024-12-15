@@ -247,3 +247,17 @@ Realiza um pagamento de um usuário para outro.
 ```
 
 ___
+
+### DELETE /groups/:groupId/expenses/:expenseId
+Deleta a despesa informada pelo seu id dentro do grupo informado.
+
+**Resposta**
+
+```
+{
+    success: boolean,
+    message: String
+}
+```
+
+___
