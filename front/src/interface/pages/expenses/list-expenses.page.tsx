@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
-import { QueryOptionsAPI } from "infra/infra"
+import { QueryOptionsAPI } from "infra/queries"
 import { UserExpenseCard } from "interface/components/user-expense-card/user-expense-card.component"
 
 

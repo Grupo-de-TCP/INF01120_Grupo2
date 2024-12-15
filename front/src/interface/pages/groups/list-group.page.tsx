@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
-import { QueryOptionsAPI } from "infra/infra"
+import { QueryOptionsAPI } from "infra/queries"
 import { GroupCard } from "interface/components/group-card/group-card.component"
 
 const loadingObj = {

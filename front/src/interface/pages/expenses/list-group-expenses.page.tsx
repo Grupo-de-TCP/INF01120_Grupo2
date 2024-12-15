@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
-import { QueryOptionsAPI } from "infra/infra"
+import { QueryOptionsAPI } from "infra/queries"
 import { ExpenseI } from "infra/model"
 import { ExpenseCard } from "interface/components/expense-card/expense-card.component"
 import { useParams } from "react-router-dom"
