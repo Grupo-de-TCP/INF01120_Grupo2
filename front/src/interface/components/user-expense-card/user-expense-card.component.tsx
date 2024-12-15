@@ -1,21 +1,46 @@
 import { Box, Card, IconButton, Skeleton, Stack, Typography } from "@mui/material"
 import { Label } from "../label"
 import { FAIcon } from "../fa-icon"
+import { useCallback } from "react"
+import { MutationAPI } from "infra/mutations"
+import toast from "react-hot-toast"
 
 interface UserExpenseCardProps {
   id: number,
   userName: string,
   debt: number,
   isWaiting?: boolean,
+  groupId?: number, 
 }
 
 export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
   id,
   userName,
   debt,
-  isWaiting
+  isWaiting,
+  groupId
 }) => {
 
+  const {
+    mutateAsync: payDebt,
+    isPending: isPaying,
+  } = MutationAPI.useCreatePaymentMutation();
+
+  const handlePayDebt = useCallback(() => {
+    const c = window.confirm("Você deseja quitar essa dívida?")
+    if (c) {
+      toast.promise(payDebt({
+        amount: Math.abs(debt),
+        payerId: id,
+        receiverId: id,
+        groupId
+      }), {
+        loading: "Pagando...",
+        success: "Dívida paga com sucesso!",
+        error: "Erro ao pagar a dívida"
+      })
+    }
+  }, [])
 
   return (
     <Card>
@@ -56,10 +81,8 @@ export const UserExpenseCard: React.FC<UserExpenseCardProps> = ({
           </Box>
           <IconButton
             color="primary"
-            onClick={() => {
-              const c = window.confirm("Você deseja quitar essa dívida?")
-              console.log(id, c)
-            }}
+            disabled={isPaying}
+            onClick={handlePayDebt}
           >
             <FAIcon icon="circle-dollar-to-slot" />
           </IconButton>

@@ -42,7 +42,6 @@ const form = createFormStore<CreateExpenseForm, CreateExpenseStore & CreateExpen
 const useOnSave = () => {
   const { onClose } = form.useStore();
   return useCallback(() => {
-    console.log(form.useStore.getState());
     onClose();
   }, [onClose])
 }

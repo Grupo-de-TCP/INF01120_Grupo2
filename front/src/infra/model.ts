@@ -47,8 +47,8 @@ export interface CreateExpensePayload {
 }
 
 export interface CreatePaymentPayload {
-    payerId: string,
-    receiverId: string,
+    payerId: number,
+    receiverId: number,
     amount: number,
-    groupId?: string,
+    groupId?: number,
 }
