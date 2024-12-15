@@ -2,11 +2,15 @@ import { queryOptions, useQueryClient } from '@tanstack/react-query'
 import { api } from './api'
 import { BaseResponseI, ExpenseI, GroupI, GroupListI, UserI } from './model'
 import { useCallback } from 'react'
+import { USER_LOGGED_KEY } from './user'
 
 const groupsById = (id?: number) => queryOptions({
     queryKey: ['group', id],
     queryFn: async () => {
-        return api.get<BaseResponseI<GroupI>>(`/groups/${id}`).then(e => e.data.content)
+        return api.get<BaseResponseI<GroupI>>(`/groups/${id}`).then(e => ({
+            ...e.data.content,
+            members: e.data.content.members.filter(e => e.id !== USER_LOGGED_KEY)
+        } as GroupI))
     },
     enabled: Number.isInteger(id)
 })
@@ -21,7 +25,7 @@ const groups = queryOptions({
 const users = queryOptions({
     queryKey: ['users'],
     queryFn: async () => {
-        return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content)
+        return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content.filter(e => e.id !== USER_LOGGED_KEY))
     },
 })
 
@@ -46,9 +50,15 @@ const useInvalidateQuery = () => {
     return useCallback(() => {
         queryClient.invalidateQueries(users)
         queryClient.invalidateQueries(groups)
-        queryClient.invalidateQueries(groupsById())
-        queryClient.invalidateQueries(expenseByIds())
-        queryClient.invalidateQueries(expenseByGroupId())
+        queryClient.invalidateQueries({
+            queryKey: ['group']
+        })
+        queryClient.invalidateQueries({
+            queryKey: ['expense']
+        })
+        queryClient.invalidateQueries({
+            queryKey:['expenses']
+        })
     },[queryClient])
 }
 
