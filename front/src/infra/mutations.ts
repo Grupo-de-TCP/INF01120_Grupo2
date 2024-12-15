@@ -31,7 +31,7 @@ const useDeleteExpenseMutation = (groupId?: number, expenseId?: number) => {
   const invalidate = QueryOptionsAPI.useInvalidateQuery()
   return useMutation({
     mutationFn: async () => {
-      if (!groupId || !expenseId) {
+      if (!Number.isInteger(groupId) || !Number.isInteger(expenseId)) {
         return
       }
       return await api.delete(`/groups/${groupId}/expenses/${expenseId}`)

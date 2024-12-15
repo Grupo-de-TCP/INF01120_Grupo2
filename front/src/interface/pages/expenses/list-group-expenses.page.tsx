@@ -1,12 +1,12 @@
 import { Stack } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
 import { QueryOptionsAPI } from "infra/queries"
-import { ExpenseI } from "infra/model"
-import { ExpenseCard } from "interface/components/expense-card/expense-card.component"
+import { ExpenseCard, ExpenseCardProps } from "interface/components/expense-card/expense-card.component"
 import { useParams } from "react-router-dom"
 
-const defaultExpense: ExpenseI = {
+const defaultExpense: ExpenseCardProps = {
   id: 0,
+  groupId: 0,
   title: '',
   amount: 0,
   payer: {
@@ -42,6 +42,7 @@ const ListGroupExpensesPage = () => {
     <Stack px={2.5} py={3} gap={2}>
       {expensesData.map(ex => (
         <ExpenseCard
+          groupId={Number(id)}
           key={ex.id}
           {...ex}
         />

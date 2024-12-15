@@ -3,19 +3,25 @@ import { Card, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Bu
 import { Stack } from "@mui/system";
 import { FAIcon } from "../fa-icon";
 import { ExpenseI } from "infra/model";
+import { MutationAPI } from "infra/mutations";
+import { toast } from "react-hot-toast"
 
 export interface ExpenseCardProps extends ExpenseI {
   isWaiting?: boolean;
+  groupId: number | undefined;
 }
 
 export const ExpenseCard: React.FC<ExpenseCardProps> = ({
   amount,
   title,
-  id: _id, // TODO delete,
+  id,
+  groupId,
   participants,
   isWaiting,
   payer,
 }) => {
+
+
   const [open, setOpen] = useState(false);
 
   const dividedIn = useMemo(() => participants.length, [participants]);
@@ -30,11 +36,21 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const {
+    mutateAsync: deleteExpense,
+    isPending: isDeleting,
+  } = MutationAPI.useDeleteExpenseMutation(groupId, id);
+
   const handleDelete = () => {
     const c = window.confirm("Você deseja excluir essa despesa?");
     if (c) {
-      console.log("Excluindo despesa...");
-      handleClose();
+      toast.promise(deleteExpense(), {
+        loading: "Excluindo...",
+        success: "Despesa excluída com sucesso!",
+        error: "Erro ao excluir a despesa"
+      }).then(() => {
+        handleClose();
+      })
     }
   }
 
@@ -47,8 +63,8 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
         >
           {isWaiting ? (
             <Stack px={2} py={1.5} gap={0.5}>
-              <Skeleton/>
-              <Skeleton/>
+              <Skeleton />
+              <Skeleton />
             </Stack>
           ) : (
             <Stack px={2} py={1.5} direction="row" justifyContent="space-between">
@@ -73,12 +89,13 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
 
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={isDeleting ? () => { } : handleClose}
         fullWidth
         maxWidth="sm"
       >
         <DialogTitle>Detalhes da Despesa</DialogTitle>
         <IconButton
+          disabled={isDeleting}
           onClick={handleClose}
           sx={{ position: "absolute", top: 18, right: 18 }}
         >
@@ -113,11 +130,12 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
             color="error"
             variant="outlined"
             onClick={handleDelete}
+            disabled={isDeleting}
             startIcon={<FAIcon icon="trash" fontSize="small" />}
           >
             Excluir
           </Button>
-          <Button color="primary" variant="contained" onClick={handleClose}>Fechar</Button>
+          <Button disabled={isDeleting} color="primary" variant="contained" onClick={handleClose}>Fechar</Button>
         </DialogActions>
       </Dialog>
     </>
