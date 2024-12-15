@@ -1,6 +1,7 @@
-import { queryOptions } from '@tanstack/react-query'
+import { queryOptions, useQueryClient } from '@tanstack/react-query'
 import { api } from './api'
 import { BaseResponseI, ExpenseI, GroupI, GroupListI, UserI } from './model'
+import { useCallback } from 'react'
 
 const groupsById = (id?: number) => queryOptions({
     queryKey: ['group', id],
@@ -40,11 +41,22 @@ const expenseByIds = (groupId?: number, expenseId?: number) => queryOptions({
     enabled: Number.isInteger(groupId) && Number.isInteger(expenseId)
 })
 
+const useInvalidateQuery = () => {
+    const queryClient = useQueryClient()
+    return useCallback(() => {
+        queryClient.invalidateQueries(users)
+        queryClient.invalidateQueries(groups)
+        queryClient.invalidateQueries(groupsById())
+        queryClient.invalidateQueries(expenseByIds())
+        queryClient.invalidateQueries(expenseByGroupId())
+    },[queryClient])
+}
 
 export const QueryOptionsAPI = {
     users,
     groups,
     groupsById,
     expenseByIds,
-    expenseByGroupId
+    expenseByGroupId,
+    useInvalidateQuery
 }

@@ -36,3 +36,19 @@ export interface UserI {
     name: string,
     debt: number,
 }
+
+
+export interface CreateExpensePayload {
+    title: string,
+    amount: number,
+    participants: string[],
+    payerId: string,
+    groupId: string,
+}
+
+export interface CreatePaymentPayload {
+    payerId: string,
+    receiverId: string,
+    amount: number,
+    groupId?: string,
+}
