@@ -3,6 +3,7 @@ package com.splitandconquer.api.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.splitandconquer.api.models.Expense;
 import com.splitandconquer.api.models.Group;
+import com.splitandconquer.api.responses.DeleteResponse;
 import com.splitandconquer.api.responses.group.*;
 import java.util.ArrayList;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.splitandconquer.api.views.GroupViews;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 /**
  *
@@ -52,18 +54,29 @@ public class GroupController {
     @GetMapping("{groupId}/expenses/{expenseId}")
     @JsonView(GroupViews.ExpensesView.class)
     public GroupSingleExpenseResponse getExpense(@PathVariable int groupId, @PathVariable int expenseId) {
-        if (groupId < 0 || groupId >= GroupController.allGroups.size()) {
+        Group group = GroupController.findGroup(groupId);
+        Expense expense = group.getExpense(expenseId);
+        
+        if (expense == null) {
            return new GroupSingleExpenseResponse(false, null);
         }
         
+        return new GroupSingleExpenseResponse(true, expense);
+    }
+    
+    @DeleteMapping("{groupId}/expenses/{expenseId}")
+    public DeleteResponse deleteExpense(@PathVariable int groupId, @PathVariable int expenseId) {
         Group group = GroupController.findGroup(groupId);
         ArrayList<Expense> expenses = group.getExpenses();
         
-        if (expenseId < 0 || expenseId >= expenses.size()) {
-           return new GroupSingleExpenseResponse(false, null);
+        for (int i = 0; i < expenses.size(); i++) {
+            if (expenses.get(i).getId() == expenseId) {
+                expenses.remove(i);
+                return new DeleteResponse(true, "Despesa removida com sucesso.");
+            }
         }
         
-        return new GroupSingleExpenseResponse(true, expenses.get(expenseId));
+        return new DeleteResponse(false, "Despesa não encontradao.");
     }
     
     public static Group findGroup(int id) {

@@ -25,6 +25,12 @@ public class User {
         this.name = name;
     }
     
+    public User(int id, String name, ArrayList<Balance> balances) {
+        this.id = id;
+        this.name = name;
+        this.balances = balances;
+    }
+    
     public void addBalance(Balance balance) {
         this.balances.add(balance);
     }
