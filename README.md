@@ -21,10 +21,11 @@ Projeto desenvolvido como trabalho final para a disciplina INF01120 - Técnicas 
 
 ### Estrutura do Repositório
 
-- **/src**: Contém o código-fonte da aplicação.
+- **/api**: Contém o código-fonte da API.
+- **/front**: Contém o código-fonte do website em ReactJS.
 - **/pdf**: Documentação em PDF referente ao projeto.
 - **/uml**: Diagramas UML que detalham a arquitetura do sistema e o fluxo de dados.
-- **assets/**: Assets que precisamos para desenvolver a aplicação.
+- **/assets**: Assets que precisamos para desenvolver a aplicação.
 - **README.md**: Este arquivo.
 
 ## Layout
