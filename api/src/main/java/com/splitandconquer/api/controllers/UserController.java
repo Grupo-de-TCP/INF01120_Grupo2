@@ -19,7 +19,7 @@ public class UserController {
     private static ArrayList<User> allUsers = new ArrayList<User>();
 
     @GetMapping("")
-    public AllUsersResponse getUsers() {
+    public static AllUsersResponse getUsers() {
         return new AllUsersResponse(true, UserController.allUsers);
     }
     
@@ -41,4 +41,8 @@ public class UserController {
         UserController.allUsers.add(newUser);
         return newUser;
     };
+    
+    public static void setAllUsers(ArrayList<User> users) {
+        UserController.allUsers = users;
+    }
 }

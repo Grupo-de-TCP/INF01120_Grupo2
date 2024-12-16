@@ -17,7 +17,7 @@ public class Balance {
     }
     
     public void updateDividend(float dividend) {
-        this.dividend = (float)Math.round((this.dividend + dividend) * 100) / 100;
+        this.dividend = (float)Math.round((this.dividend + dividend) * 100) / 100; // Arredonda a soma para duas casas decimais
     }
     
     public User getUser() {
