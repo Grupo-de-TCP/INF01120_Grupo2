@@ -31,15 +31,21 @@ const AutoCompleteGrupos = () => {
 
 const AutoCompletePayer = () => {
 
+  const groupId = CreateExpenseService.form.useStore(e=> e.group?.id)
+
   const {
     data: users
-  } = useQuery(QueryOptionsAPI.usersWithMe)
+  } = useQuery({
+    ...QueryOptionsAPI.groupsById(Number(groupId)),
+    select: (data) => data?.members
+  })
 
   return (
     <FormFieldAutocomplete
       control={CreateExpenseService.form.control}
       name="payer"
       label="Pagante"
+      disabled={!groupId}
       items={users?.map((u) => ({ id: String(u.id), label: u.name })) || []}
     />
   )
@@ -47,9 +53,14 @@ const AutoCompletePayer = () => {
 
 const AutoCompleteDivideAmong = () => {
 
+  const groupId = CreateExpenseService.form.useStore(e=> e.group?.id)
+
   const {
     data: users
-  } = useQuery(QueryOptionsAPI.usersWithMe)
+  } = useQuery({
+    ...QueryOptionsAPI.groupsById(Number(groupId)),
+    select: (data) => data?.members
+  })
 
   return (
     <FormFieldAutocomplete
@@ -57,6 +68,7 @@ const AutoCompleteDivideAmong = () => {
       name="dividedAmong"
       label="Dividido Entre"
       multiple
+      disabled={!groupId}
       items={users?.map((u) => ({ id: String(u.id), label: u.name })) || []}
     />
   )

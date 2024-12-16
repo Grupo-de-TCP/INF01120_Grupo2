@@ -31,7 +31,7 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
 
   const divAm = useMemo(() => {
     if (meIsPayer) {
-      return (amount / dividedIn) * (dividedIn - 1);
+      return (amount / dividedIn) * (participants.filter(e => e.id !== USER_LOGGED_KEY).length);
     }
     return amount / dividedIn;
   }, [amount, dividedIn, payer]);
