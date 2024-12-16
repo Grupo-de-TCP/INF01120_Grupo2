@@ -5,6 +5,7 @@ import { FAIcon } from "../fa-icon";
 import { ExpenseI } from "infra/model";
 import { MutationAPI } from "infra/mutations";
 import { toast } from "react-hot-toast"
+import { USER_LOGGED_KEY } from "infra/user";
 
 export interface ExpenseCardProps extends ExpenseI {
   isWaiting?: boolean;
@@ -26,11 +27,13 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
 
   const dividedIn = useMemo(() => participants.length, [participants]);
 
+  const meIsPayer = useMemo(() => payer.id === USER_LOGGED_KEY, [payer.id]);
+
   const divAm = useMemo(() => {
-    if (payer) {
-      return amount / dividedIn;
+    if (meIsPayer) {
+      return (amount / dividedIn) * (dividedIn - 1);
     }
-    return (amount / dividedIn) * (dividedIn - 1);
+    return amount / dividedIn;
   }, [amount, dividedIn, payer]);
 
   const handleOpen = () => setOpen(true);
@@ -40,6 +43,7 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
     mutateAsync: deleteExpense,
     isPending: isDeleting,
   } = MutationAPI.useDeleteExpenseMutation(groupId, id);
+
 
   const handleDelete = () => {
     const c = window.confirm("Você deseja excluir essa despesa?");
@@ -71,12 +75,12 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
               <Stack gap={0.5}>
                 <Typography variant="subtitle1">{title}</Typography>
                 <Typography variant="caption" sx={{ whiteSpace: "nowrap" }}>
-                  {`${payer.name || "Você"} pagou R$ ${amount.toFixed(2)}`}
+                  {`${payer.name} pagou R$ ${amount.toFixed(2)}`}
                 </Typography>
               </Stack>
-              <Stack gap={0.5} color={payer ? "error.main" : "success.main"}>
+              <Stack gap={0.5} color={meIsPayer ? "success.main" : "error.main"}>
                 <Typography variant="caption" sx={{ whiteSpace: "nowrap" }} textAlign="right">
-                  {payer ? "Você pegou emprestado" : "Você emprestou"}
+                  {meIsPayer ? "Você emprestou" : "Você pegou emprestado"}
                 </Typography>
                 <Typography variant="subtitle1" textAlign="right">
                   {`R$ ${divAm.toFixed(2)}`}
@@ -112,7 +116,7 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
             {`Valor total: R$ ${amount.toFixed(2)}`}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {`Pago por: ${payer.name || "Você"}`}
+            {`Pago por: ${payer.name}`}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {`Participantes:`}
