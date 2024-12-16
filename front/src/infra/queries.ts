@@ -7,11 +7,12 @@ import { USER_LOGGED_KEY } from './user'
 const groupsById = (id?: number) => queryOptions({
     queryKey: ['group', id],
     queryFn: async () => {
-        return api.get<BaseResponseI<GroupI>>(`/groups/${id}`).then(e => ({
-            ...e.data.content,
-            members: e.data.content.members.filter(e => e.id !== USER_LOGGED_KEY)
-        } as GroupI))
+        return api.get<BaseResponseI<GroupI>>(`/groups/${id}`).then(e => e.data.content)
     },
+    select: (data) => ({
+        ...data,
+        members: data.members.filter(e => e.id !== USER_LOGGED_KEY)
+    } as GroupI),
     enabled: Number.isInteger(id)
 })
 
@@ -26,12 +27,6 @@ const users = queryOptions({
     queryKey: ['users'],
     queryFn: async () => {
         return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content.filter(e => e.id !== USER_LOGGED_KEY))
-    },
-})
-const usersWithMe = queryOptions({
-    queryKey: ['users'],
-    queryFn: async () => {
-        return api.get<BaseResponseI<UserI[]>>('/users').then(e => e.data.content)
     },
 })
 
@@ -55,7 +50,6 @@ const useInvalidateQuery = () => {
     const queryClient = useQueryClient()
     return useCallback(() => {
         queryClient.invalidateQueries(users)
-        queryClient.invalidateQueries(usersWithMe)
         queryClient.invalidateQueries(groups)
         queryClient.invalidateQueries({
             queryKey: ['group']
@@ -64,14 +58,13 @@ const useInvalidateQuery = () => {
             queryKey: ['expense']
         })
         queryClient.invalidateQueries({
-            queryKey:['expenses']
+            queryKey: ['expenses']
         })
-    },[queryClient])
+    }, [queryClient])
 }
 
 export const QueryOptionsAPI = {
     users,
-    usersWithMe,
     groups,
     groupsById,
     expenseByIds,
