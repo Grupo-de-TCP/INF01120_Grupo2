@@ -20,6 +20,7 @@ public class ExpenseController {
     @PostMapping("/create-expense")
     public static PostResponse createExpense(@RequestBody ExpensePayload expensePayload) {
         Group group = GroupController.findGroup(expensePayload.groupId());
+
         if (group == null) {
             return new PostResponse(false, "Erro: grupo nao existe.");
         }
@@ -35,10 +36,11 @@ public class ExpenseController {
         }
         
         ArrayList<User> participants = ExpenseController.montaListaParticipantes(expensePayload, group);
+
         if (participants == null) {
             return new PostResponse(false, "Erro: algum participante inválido foi informado.");
         }
-        
+                
         ExpenseController.updateBalances(expensePayload, participants);
         
         int expenseId = group.getCurrentExpenseId();

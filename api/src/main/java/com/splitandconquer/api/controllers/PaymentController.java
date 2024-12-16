@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 public class PaymentController {
     @PostMapping("/create-payment")
-    public PostResponse createPayment(@RequestBody PaymentPayload paymentPayload) {
+    public static PostResponse createPayment(@RequestBody PaymentPayload paymentPayload) {
         User loggedUser = ApiApplication.getLoggedUser();
         boolean pagamentoRealizado = loggedUser.updateDividend(paymentPayload.payerId(), paymentPayload.receiverId(), paymentPayload.amount());
 

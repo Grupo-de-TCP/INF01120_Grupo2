@@ -24,13 +24,13 @@ public class GroupController {
 
     @GetMapping("")
     @JsonView(GroupViews.AllGroupsView.class)
-    public AllGroupsResponse getGroups() {
+    public static AllGroupsResponse getGroups() {
         return new AllGroupsResponse(true, GroupController.allGroups);
     }
     
     @GetMapping("/{id}")
     @JsonView(GroupViews.SingleGroupView.class)
-    public SingleGroupResponse getGroup(@PathVariable int id) {
+    public static SingleGroupResponse getGroup(@PathVariable int id) {
         if (id < 0 || id >= GroupController.allGroups.size()) {
            return new SingleGroupResponse(false, null);
         }
@@ -40,7 +40,7 @@ public class GroupController {
     
     @GetMapping("{id}/expenses")
     @JsonView(GroupViews.ExpensesView.class)
-    public GroupAllExpensesResponse getExpenses(@PathVariable int id) {
+    public static GroupAllExpensesResponse getExpenses(@PathVariable int id) {
         if (id < 0 || id >= GroupController.allGroups.size()) {
            return new GroupAllExpensesResponse(false, null);
         }
@@ -53,10 +53,13 @@ public class GroupController {
     
     @GetMapping("{groupId}/expenses/{expenseId}")
     @JsonView(GroupViews.ExpensesView.class)
-    public GroupSingleExpenseResponse getExpense(@PathVariable int groupId, @PathVariable int expenseId) {
+    public static GroupSingleExpenseResponse getExpense(@PathVariable int groupId, @PathVariable int expenseId) {
         Group group = GroupController.findGroup(groupId);
-        Expense expense = group.getExpense(expenseId);
+        if (group == null) {
+           return new GroupSingleExpenseResponse(false, null);
+        }
         
+        Expense expense = group.getExpense(expenseId);
         if (expense == null) {
            return new GroupSingleExpenseResponse(false, null);
         }
@@ -65,8 +68,12 @@ public class GroupController {
     }
     
     @DeleteMapping("{groupId}/expenses/{expenseId}")
-    public DeleteResponse deleteExpense(@PathVariable int groupId, @PathVariable int expenseId) {
+    public static DeleteResponse deleteExpense(@PathVariable int groupId, @PathVariable int expenseId) {
         Group group = GroupController.findGroup(groupId);
+        if (group == null) {
+           return new DeleteResponse(false, "Grupo não encontrado.");
+        }
+        
         ArrayList<Expense> expenses = group.getExpenses();
         
         for (int i = 0; i < expenses.size(); i++) {
@@ -93,5 +100,9 @@ public class GroupController {
         
         GroupController.allGroups.add(group);
         return group;
+    }
+    
+    public static void setAllGroups(ArrayList<Group> groups) {
+        GroupController.allGroups = groups;
     }
 }
