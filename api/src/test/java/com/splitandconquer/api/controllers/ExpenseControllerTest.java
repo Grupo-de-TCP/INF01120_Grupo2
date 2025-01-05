@@ -44,7 +44,7 @@ public class ExpenseControllerTest {
     @Test
     public void testCreateExpenseSuccess() {
         PostResponse response = ExpenseController.createExpense(new ExpensePayload("Gasolina", 400, new int[]{1000,0,1,2,3}, 1000, 0));
-        assertFalse(response.success());
+        assertTrue(response.success());
     }
     
     @Test
